@@ -1,0 +1,58 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+@*
+asp-for= lo que hace es permitir acceder a las propiedades del modelo establecido arriba @model Category
+asp-validation-for= Esto es para valdiaciones
+asp-validation-summary= Esto sirve para mostrar todos los errores del formulario en un lugar
+asp-route-id= Esto sirve para pasar el parametro que tiene asociado a la acción del controller. Esto es cuando la funcion tiene parametro
+asp-action= Apunta a la acción especificada. Esn este caso a Edit
+*@
+
+<form method="post" asp-action="Edit">
+    <div class="border p-3 m-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Actualizar Persona</h2>
+            <hr/>
+        </div>
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year"></label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Actualizar</button>
+        <a asp-controller="Person" asp-action="Index" class="btn btn-secondary" style="width:150px">Volver</a>
+    </div>
+
+</form>
+
+@*Este tipo de validación parcial para hacer las validaciones desde el lado del cliente
+    Esto es interesante porque si la validación se realiza solo desde el servidor, se recarga la página para
+    luego realizar las validaciones. Esto hace que sea mucho mas lento. En cambio, si la validación es
+    desde el cliente, no es necesario actualizar la página para la validación. 
+    Por lo que entiendo, lo mejor es realizar las 2 maneras de validación en conjunto por temas de seguridad.
+*@
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

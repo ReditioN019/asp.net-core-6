@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Person>//La vista recibe un IEnumerable de Person(modelo)
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Lista de Personas</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Person" asp-action="Create" class="btn btn-primary"> 
+                Crear Nueva Persona
+            </a>
+        </div>
+    </div>
+</div>
+<br />
+
+<table id="datatable" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td>@obj.Name</td>
+                <td>@obj.LastName</td>
+                <td>@obj.Year</td>
+                <td class="d-flex justify-content-center" role="group">  
+                    <a asp-controller="Person" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-warning mx-3">Editar</a>
+                    <a asp-controller="Person" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+    
+        let table = new DataTable('#datatable', {
+            "language":{
+                url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            },
+            //"ajax":{
+            //    "url": "Person",
+            //    "type": "GET",
+            //    "datatype": "json",
+            //}
+        });
+
+    </script>
+}

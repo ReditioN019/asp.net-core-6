@@ -1,0 +1,76 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form id="personForm" method="post">
+    <div class="border p-3 m-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Añadir Persona</h2>
+            <hr/>
+        </div>
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year"></label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Crear</button>
+        <a asp-controller="Person" asp-action="Index" class="btn btn-secondary" style="width:150px">Volver</a>
+    </div>
+
+</form>
+
+@*Este tipo de validación parcial para hacer las validaciones desde el lado del cliente
+    Esto es interesante porque si la validación se realiza solo desde el servidor, se recarga la página para
+    luego realizar las validaciones. Esto hace que sea mucho mas lento. En cambio, si la validación es
+    desde el cliente, no es necesario actualizar la página para la validación. 
+    Por lo que entiendo, lo mejor es realizar las 2 maneras de validación en conjunto por temas de seguridad.
+*@
+
+@section Scripts{
+
+     <script>
+    
+        function submitPerson() {
+            var data = $("#personForm").serialize();
+            console.log(data);
+            alert(data);
+            $.ajax({
+                type: 'POST',
+                url: '/Person/Create',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+                data: data,
+                success: function (result) {
+                    alert('Successfully received Data ');
+                    console.log(result);
+                },
+                error: function () {
+                    alert('Failed to receive the Data');
+                    console.log('Failed ');
+                }
+            })
+        }
+
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+ 
+}

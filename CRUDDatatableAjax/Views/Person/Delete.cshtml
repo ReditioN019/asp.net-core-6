@@ -1,0 +1,44 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<!--el asp-action deberia ser DeletePOST, pero lo cambio por delete gracias a la modificacion en controller -->
+<form method="post" asp-action="Delete"> 
+
+    <input asp-for="Id" hidden />
+
+    <div class="border p-3 m-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Eliminar Persona</h2>
+            <hr/>
+        </div>
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" disabled />
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year"></label>
+            <input asp-for="Year" class="form-control" disabled />
+        </div>
+
+        <button type="submit" class="btn btn-danger" style="width:150px">Eliminar</button>
+        <a asp-controller="Person" asp-action="Index" class="btn btn-secondary" style="width:150px">Volver</a>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

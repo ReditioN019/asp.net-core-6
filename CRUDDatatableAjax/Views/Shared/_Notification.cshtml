@@ -1,0 +1,23 @@
+﻿
+@if(TempData["success"] != null) //Estos datos temporales se pueden usar en toda la aplicación
+{ 
+    //LA PAGINA DE LAS TOSTADORAS(ALERTAS) ES https://github.com/CodeSeven/toastr Esto lo explica el indio en 2:49:10
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]')
+    </script>
+
+
+}
+
+@if(TempData["error"] != null){
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+     <script type="text/javascript">
+        toastr.error('@TempData["error"]')
+    </script>
+
+}
