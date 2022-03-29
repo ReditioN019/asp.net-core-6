@@ -1,0 +1,40 @@
+﻿@model Contacto
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="card">
+  <div class="card-header">
+    Editar Contacto
+  </div>
+  <div class="card-body">
+
+      <form asp-action="Update" asp-controller="Contact">
+
+          <input asp-for="Id" type="hidden" class="form-control" >
+
+          <div class="mb-3">
+            <label  class="form-label">Nombre</label>
+            <input asp-for="Name" type="text" class="form-control" >
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input asp-for="Phone" type="text" class="form-control">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" type="email" class="form-control">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary">Editar</button>
+          <a asp-action="Index" asp-controller="Contact" class="btn btn-warning" >Volver</a>
+        </form>
+         
+
+  </div>
+</div>
+

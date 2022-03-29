@@ -18,16 +18,20 @@
 </div>
 <br />
 
-<table id="datatable" class="table table-bordered table-striped" style="width:100%">
+<table id="datatable" class="display cell-border compact" style="width:100%">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Edad</th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="BodyData">
+        
+    </tbody>
+@*    <tbody>
         @foreach(var obj in Model)
         {
             <tr>
@@ -40,22 +44,59 @@
                 </td>
             </tr>
         }
-    </tbody>
+    </tbody>*@
 </table>
 
 @section Scripts{
     <script>
     
         let table = new DataTable('#datatable', {
+            "ajax":{
+                "url": "@Url.Action("GetData", "Person")",
+                "type": "POST",
+                "contentType": 'application/x-www-form-urlencoded; charset=UTF-8', //es el tipo de datos que está enviando. Esto es predeterminado
+                "datatype": "json", //es lo que espera el servidor (json, html, text, etc)
+                "dataSrc": "", //Esto sirve para cuando el arreglo de obj del json no tiene nombre..
+                //"success": function(data){
+
+                //    console.log("yujuu", data);
+                //},
+                //"error": function(err){
+                //    console.log("malarda")
+                //}
+            },
+            "columns": [
+               {"data": 'id'},
+               {"data": 'name'},
+               {"data": 'lastName'},
+               {"data": 'year'},
+               {"render": function (data, row) { 
+                       const editDelete = "<div><a href='#' class='btn btn-warning'>Edit</a><a href='#' class='btn btn-danger'>Delete</a><div>"; 
+                       return editDelete
+                   }
+               },
+               //{"defaultContent": `<button id="btnEditar" asp-controller="Person" asp-action="Edit" asp-route-id="id" class="btn btn-warning">Editar</button>`}
+            ],
             "language":{
                 url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
             },
-            //"ajax":{
-            //    "url": "Person",
-            //    "type": "GET",
-            //    "datatype": "json",
-            //}
+
+              
+
         });
+
+                //{​​​​​​​​​​​​
+                //    "render": function (data, type, full, meta) {​​​​​​​​​​​​
+                //        var editar = '<a title="Editar Usuario" href="JavaScript:EditarUsuario(\'' + full.usu_login + '\')"><i class="fa-solid fa-pen-to-square"></i></a>';
+                //        var eliminar = '<a title="Eliminar Usuario" href="JavaScript:EliminarUsuario(\'' + full.usu_login + '\')"><i class="fa-solid fa-trash-can"></i></a>';
+                //        return editar// + eliminar;
+                //    }​​​​​​​​​​​​,
+                //    "width": "1%",
+                //    "orderable": false,
+                //    "className": 'dt-center dt-botonera nowrap',
+                //    "data": null,
+                //    "defaultContent": ''
+                //}​​​​​​​​​​​​
 
     </script>
 }

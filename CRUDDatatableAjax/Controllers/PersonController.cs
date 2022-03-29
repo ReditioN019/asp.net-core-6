@@ -16,8 +16,13 @@ namespace CRUDDatatableAjax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Person> objPersonList = _db.Persons; //Obtiene los datos de la tabla person de la bd y la convertirá a una lista con IEnumerable
-            return View(objPersonList); //Le pasamos el objCategoryList a la vista.
+            return View(); 
+        }
+
+        public JsonResult GetData() //Obtengo los datos de la BD y los transformo a JSON para recibirlos en la vista
+        {
+            IEnumerable<Person> data = _db.Persons.ToList(); //Obtiene los datos de la tabla person de la bd y la convertirá a una lista con IEnumerable
+            return Json(data);
         }
 
         [HttpGet]
