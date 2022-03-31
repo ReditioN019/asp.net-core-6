@@ -9,7 +9,7 @@
   </div>
   <div class="card-body">
 
-      <form asp-action="Update" asp-controller="Contact">
+      <form method="post" asp-action="Update">
 
           <input asp-for="Id" type="hidden" class="form-control" >
 
@@ -18,11 +18,13 @@
             <input asp-for="Name" type="text" class="form-control" >
             <span asp-validation-for="Name" class="text-danger"></span>
           </div>
+
           <div class="mb-3">
             <label class="form-label">Teléfono</label>
             <input asp-for="Phone" type="text" class="form-control">
             <span asp-validation-for="Phone" class="text-danger"></span>
           </div>
+
           <div class="mb-3">
             <label class="form-label">Email</label>
             <input asp-for="Email" type="email" class="form-control">

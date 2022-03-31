@@ -83,11 +83,11 @@ namespace CRUDDatatableAjax.Controllers
 
 
         [HttpGet]
-        public IActionResult Delete(int? id) //Que significa el ?
+        public IActionResult Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
 
-            var PersonFromDb = _db.Persons.Find(id);//Aquí encontraremos la categoria que queremos actualiza mediante la id
+            var PersonFromDb = _db.Persons.Find(id);
 
             if (PersonFromDb == null) return NotFound();
 

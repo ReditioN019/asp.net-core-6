@@ -3,36 +3,83 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="card">
-  <div class="card-header">
-    Contactos
-  </div>
-  <div class="card-body">
-        <a asp-action="Create" asp-controller="Contact" class="btn btn-warning" >Crear Nuevo</a>
-         
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Phone</td>
-                        <td>@item.Email</td>
-                        <td>
-                            <a asp-action="Update" asp-controller="Contact" class="btn btn-warning btn-sm" asp-route-Id="@item.Id">Editar</a>
-                            <a asp-action="Delete" asp-controller="Contact" class="btn btn-danger btn-sm" asp-route-Id="@item.Id">Eliminar</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-  </div>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Lista de Contactos</h2>
+        </div>
+        <div class="col-6 text-end">
+          <a asp-action="Create" asp-controller="Contact" class="btn btn-warning" >
+              Crear Nuevo
+          </a>
+        </div>
+    </div>
 </div>
+<br />
+         
+<table id="datatable" class="display cell-border" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id=""></tbody>
+    @*<tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="Update" asp-controller="Contact" class="btn btn-warning btn-sm" asp-route-Id="@item.Id">Editar</a>
+                    <a asp-action="Delete" asp-controller="Contact" class="btn btn-danger btn-sm" asp-route-Id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>*@
+</table>
+
+
+
+@section Scripts{
+    <script>
+    
+        let table = new DataTable('#datatable', {
+            "ajax":{
+                "url": "@Url.Action("GetDataContact", "Contact")",
+                "type": "POST",
+                "contentType": 'application/x-www-form-urlencoded; charset=UTF-8', //es el tipo de datos que está enviando. Esto es predeterminado
+                "datatype": "json", //es lo que espera el servidor (json, html, text, etc)
+                "dataSrc": "", //Esto sirve para cuando el arreglo de obj del json no tiene nombre..
+            },
+            "columns": [
+               {"data": 'name'},
+               {"data": 'phone'},
+               {"data": 'email'},
+               {
+                   "render": function(data, type, full, meta){
+                       const editDelete =
+                       `<div>
+                            <a href='/Contact/Update/${full.id}' class='btn btn-warning'>Edit</a>
+                            <a href='/Contact/Delete/${full.id}' class='btn btn-danger'>Delete</a>
+                       <div>`; 
+                       return editDelete
+                   }
+               }
+            ],
+            "language":{
+                url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            },
+        });
+
+        //PAGINA QUE ME AYUDO A RESOLVER EL PROBLEMA
+        // https://social.msdn.microsoft.com/Forums/es-ES/eecc6cfa-1c26-4596-91e5-ee9213e69429/ajax-datatable-aspnet-core-31?forum=vcses
+
+
+    </script>
+}
